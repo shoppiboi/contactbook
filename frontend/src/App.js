@@ -27,8 +27,29 @@ class App extends React.Component {
     };
   }
   
+  renderContacts = () => {
+
+    return this.state.contacts.map((contact) => (
+      <li key={contact.id}>
+        <span 
+          title={contact.name}
+        >
+          {contact.name}
+        </span>
+      </li>
+    ))
+  }
+
   render() {  
-      return <h1>Hello world!</h1>;  
+      return (
+        <main>
+          <h1>Hello world!</h1>
+        
+          <ul>
+            {this.renderContacts()}
+          </ul>
+        </main>
+      )  
   }  
 }
 
