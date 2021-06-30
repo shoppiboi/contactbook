@@ -23,5 +23,5 @@ router.register(r'contactbook', views.ContactBookView, 'contact')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include(router.urls))
+    path('api/', include(router.urls))  #   path for the api urls, where: api/contactbook returns all Contacts, and api/contactbook/id returns a specific Contact
 ]
