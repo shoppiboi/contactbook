@@ -27,8 +27,8 @@ class App extends React.Component {
       contacts: testContacts,
       modal: false,
       activeItem: {
-        name: "",
-        phone_number: "",
+        contactname: "",
+        phone: "",
         email: "",
       },
     };
@@ -45,7 +45,7 @@ class App extends React.Component {
   };
 
   createItem = () => {
-    const item = { name: "", phone_number: "", email: ""};
+    const item = { contactname: "", phone: "", email: ""};
 
     this.setState({ activeItem: item, modal: !this.state.modal });
   };

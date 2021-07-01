@@ -20,9 +20,10 @@ export default class CustomModal extends Component {
     }
 
     handleChange = (e) => {
-        let { name, value } = e.target;
 
-        const activeItem = { ...this.state.activeItem, [name]: value };
+        console.log(e.target.name)
+
+        const activeItem = { ...this.state.activeItem, [e.target.name]: e.target.value };
 
         this.setState({ activeItem });
     };
@@ -40,7 +41,7 @@ export default class CustomModal extends Component {
                             <Input
                                 type='text'
                                 id='contact-name'
-                                name='name'
+                                name='contactname'
                                 value={this.state.activeItem.name}
                                 onChange={this.handleChange}
                                 placeholder='Enter name of the contact'
@@ -51,7 +52,7 @@ export default class CustomModal extends Component {
                             <Input 
                                 type='text'
                                 id='contact-phone-number'
-                                name='phone-number'
+                                name='phone'
                                 value={this.state.activeItem.phone_number}
                                 onChange={this.handleChange}
                                 placeholder='Enter phone number'
