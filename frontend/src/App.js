@@ -30,11 +30,26 @@ class App extends React.Component {
   renderContacts = () => {
 
     return this.state.contacts.map((contact) => (
-      <li key={contact.id}>
+      <li 
+        className="list-group-item d-flex justify-content-between align-items-center"
+        key={contact.id}>
         <span 
+          className={'todo-title mr-2'}
           title={contact.name}
         >
           {contact.name}
+        </span>
+        <span>
+          <button
+            className='btn btn-secondary'>
+              Edit
+            </button>
+            &nbsp;
+            &nbsp;
+          <button
+            className='btn btn-danger'>
+              Delete
+            </button>
         </span>
       </li>
     ))
@@ -42,12 +57,24 @@ class App extends React.Component {
 
   render() {  
       return (
-        <main>
-          <h1>Hello world!</h1>
-        
-          <ul>
-            {this.renderContacts()}
-          </ul>
+        <main className='container'>
+          <h1 className='text-uppercase text-center my-4'>Contact Book</h1>
+          <div className='row'>
+            <div className='col-md-6 col-sm-10 mx-auto p-0'>
+              <div className='card p-3'>
+                <div className='mb-4'>
+                  <button 
+                    className='btn btn-primary'
+                  >
+                    Add Contact
+                  </button>
+                </div>
+               <ul className='list-group list-group-flush border-top-0'>
+                {this.renderContacts()}
+               </ul>
+              </div>
+            </div>
+          </div>
         </main>
       )  
   }  
