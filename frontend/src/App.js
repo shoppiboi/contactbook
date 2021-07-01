@@ -1,5 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
+import Modal from './components/Modal';
 
 import React from 'react';
 
@@ -24,9 +25,31 @@ class App extends React.Component {
     super(props);
     this.state = {
       contacts: testContacts,
+      modal: false,
+      activeItem: {
+        name: "",
+        phone_number: "",
+        email: "",
+      },
     };
   }
   
+  toggle = () => {
+    this.setState({ modal: !this.state.modal});
+  };
+
+  handleSubmit = (item) => {
+    this.toggle();
+
+    alert('save' + JSON.stringify(item));
+  };
+
+  createItem = () => {
+    const item = { name: "", phone_number: "", email: ""};
+
+    this.setState({ activeItem: item, modal: !this.state.modal });
+  };
+
   renderContacts = () => {
 
     return this.state.contacts.map((contact) => (
@@ -40,6 +63,12 @@ class App extends React.Component {
           {contact.name}
         </span>
         <span>
+          <button
+            className='btn btn-info'>
+              View
+          </button>
+            &nbsp;
+            &nbsp;
           <button
             className='btn btn-secondary'>
               Edit
@@ -65,6 +94,7 @@ class App extends React.Component {
                 <div className='mb-4'>
                   <button 
                     className='btn btn-primary'
+                    onClick={this.createItem}
                   >
                     Add Contact
                   </button>
@@ -75,6 +105,13 @@ class App extends React.Component {
               </div>
             </div>
           </div>
+          {this.state.modal ? (
+            <Modal
+              activeItem={this.state.activeItem}
+              toggle={this.toggle}
+              onSave={this.handleSubmit}
+            />
+          ) : null}
         </main>
       )  
   }  
