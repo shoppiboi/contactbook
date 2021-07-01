@@ -39,8 +39,8 @@ export default class CustomModal extends Component {
                             <Input
                                 type='text'
                                 id='contact-name'
-                                name='contactname'
-                                value={this.state.activeItem.contactname}
+                                name='name'
+                                value={this.state.activeItem.name}
                                 onChange={this.handleChange}
                                 placeholder='Enter name of the contact'
                             />

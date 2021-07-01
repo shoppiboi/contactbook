@@ -1,6 +1,6 @@
-import logo from './logo.svg';
 import './App.css';
 import Modal from './components/Modal';
+import axios from 'axios';
 
 import React from 'react';
 
@@ -24,52 +24,76 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      contacts: testContacts,
+      contacts: [],
       modal: false,
       activeItem: {
-        contactname: "",
+        name: "",
         phone: "",
         email: "",
       },
     };
   }
   
+  componentDidMount() {
+    this.refreshContacts();
+  }
+
+  refreshContacts = () => {
+    axios
+      .get('/api/contactbook/')
+      .then((res) => this.setState({ contacts: res.data}))
+      .catch((err) => console.log("hELLO"));
+  };
+
   toggle = () => {
     this.setState({ modal: !this.state.modal});
   };
 
   handleSubmit = (item) => {
     this.toggle();
+
+    if (item.id) {
+      axios
+        .put('/api/contactbook/${item.id}/', item)
+        .then((res) => this.refreshContacts());
+        return;
+    }
+    axios
+      .post('/api/contactbook/', item)
+      .then((res) => this.refreshContacts());
   };
 
   handleDelete = (item) => {
-    alert("delete" + JSON.stringify(item))
+    alert("delete" + JSON.stringify(item));
   }
 
   createItem = () => {
-    let item = { contactname: "", phone: "", email: ""};
+    let item = { name: "", phone: "", email: ""};
 
     this.setState({ activeItem: item, modal: !this.state.modal });  
   };
 
   editItem = (item) => {
 
-    let editItem = { contactname: item['contactname'], phone: item['phone'], email: item['email']}
+    let editItem = { name: item['name'], phone: item['phone'], email: item['email']}
 
     this.setState({ activeItem: editItem, modal: !this.state.modal });
   };
 
   renderContacts = () => {
 
+    console.log(this.state.contacts);
+
     return this.state.contacts.map((contact) => (
+
       <li 
         className="list-group-item d-flex justify-content-between align-items-center"
         key={contact.id}>
         <span 
           className={'todo-title mr-2'}
-          title={contact.contactname}
+          title={contact.name}
         >
-          {contact.contactname}
+          {contact.name}
         </span>
         <span>
           <button
