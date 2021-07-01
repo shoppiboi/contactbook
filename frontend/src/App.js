@@ -42,6 +42,10 @@ class App extends React.Component {
     this.toggle();
   };
 
+  handleDelete = (item) => {
+    alert("delete" + JSON.stringify(item))
+  }
+
   createItem = () => {
     let item = { contactname: "", phone: "", email: ""};
 
@@ -50,11 +54,9 @@ class App extends React.Component {
 
   editItem = (item) => {
 
-    // let editItem = { contactname: item['contactname'], phone: item['phone'], email: item['email']}
+    let editItem = { contactname: item['contactname'], phone: item['phone'], email: item['email']}
 
-    console.log(item)
-
-    this.setState({ activeItem: item, modal: !this.state.modal });
+    this.setState({ activeItem: editItem, modal: !this.state.modal });
   };
 
   renderContacts = () => {
@@ -78,13 +80,14 @@ class App extends React.Component {
             &nbsp;
           <button
             className='btn btn-secondary'
-            onClick={() => this.editItem({ contactname: contact.contactname, phone: contact.phone, email: contact.email })}>
+            onClick={() => this.editItem(contact)}>
               Edit
             </button>
             &nbsp;
             &nbsp;
           <button
-            className='btn btn-danger'>
+            className='btn btn-danger'
+            onClick={() => this.handleDelete(contact)}>
               Delete
             </button>
         </span>
