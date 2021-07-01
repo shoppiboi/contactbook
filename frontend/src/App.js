@@ -34,15 +34,17 @@ class App extends React.Component {
     };
   }
   
+  //  if the component runs correctly: refresh the list of contacts
   componentDidMount() {
     this.refreshContacts();
   }
 
+  //  retrieves the contacts in the contactbook through a GET request to the API
   refreshContacts = () => {
     axios
       .get('/api/contactbook/')
-      .then((res) => this.setState({ contacts: res.data}))
-      .catch((err) => console.log("hELLO"));
+      .then((res) => this.setState({ contacts: res.data}))  //  saves the returned contacts to the "contacts" variable
+      .catch((err) => console.log(err));
   };
 
   toggle = () => {
@@ -64,7 +66,13 @@ class App extends React.Component {
   };
 
   handleDelete = (item) => {
-    alert("delete" + JSON.stringify(item));
+    
+    let link = '/api/contactbook/' + item.id + '/'; //  create a link pointing to the wanted item in the API
+
+    axios
+      .delete(link)
+      .then((res) => this.refreshContacts());
+
   }
 
   createItem = () => {
