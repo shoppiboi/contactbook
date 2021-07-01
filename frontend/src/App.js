@@ -27,6 +27,7 @@ class App extends React.Component {
       contacts: [],
       modal: false,
       activeItem: {
+        id: "",
         name: "",
         phone: "",
         email: "",
@@ -54,15 +55,23 @@ class App extends React.Component {
   handleSubmit = (item) => {
     this.toggle();
 
+    console.log(item)
+
+
     if (item.id) {
+
+      let link = '/api/contactbook/' + item.id + '/';
+
       axios
-        .put('/api/contactbook/${item.id}/', item)
+        .put(link, item)
         .then((res) => this.refreshContacts());
         return;
-    }
-    axios
+    } else {
+      axios
       .post('/api/contactbook/', item)
       .then((res) => this.refreshContacts());
+    }
+    
   };
 
   handleDelete = (item) => {
@@ -83,7 +92,7 @@ class App extends React.Component {
 
   editItem = (item) => {
 
-    let editItem = { name: item['name'], phone: item['phone'], email: item['email']}
+    let editItem = { id: item.id, name: item.name, phone: item.phone, email: item.email }
 
     this.setState({ activeItem: editItem, modal: !this.state.modal });
   };
