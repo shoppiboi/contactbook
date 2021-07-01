@@ -8,14 +8,14 @@ import React from 'react';
 const testContacts = [
   {
     id: 1,
-    name: 'John Smith',
-    phone_number: '1234567890',
+    contactname: 'John Smith',
+    phone: '1234567890',
     email: 'john.smith@gmail.com'
   },
   {
     id: 2,
-    name: 'John Johnson',
-    phone_number: '1234567890',
+    contactname: 'John Johnson',
+    phone: '1234567890',
     email: 'john.johnson@gmail.com'
   }
 ]
@@ -40,12 +40,19 @@ class App extends React.Component {
 
   handleSubmit = (item) => {
     this.toggle();
-
-    alert('save' + JSON.stringify(item));
   };
 
   createItem = () => {
-    const item = { contactname: "", phone: "", email: ""};
+    let item = { contactname: "", phone: "", email: ""};
+
+    this.setState({ activeItem: item, modal: !this.state.modal });  
+  };
+
+  editItem = (item) => {
+
+    // let editItem = { contactname: item['contactname'], phone: item['phone'], email: item['email']}
+
+    console.log(item)
 
     this.setState({ activeItem: item, modal: !this.state.modal });
   };
@@ -58,9 +65,9 @@ class App extends React.Component {
         key={contact.id}>
         <span 
           className={'todo-title mr-2'}
-          title={contact.name}
+          title={contact.contactname}
         >
-          {contact.name}
+          {contact.contactname}
         </span>
         <span>
           <button
@@ -70,7 +77,8 @@ class App extends React.Component {
             &nbsp;
             &nbsp;
           <button
-            className='btn btn-secondary'>
+            className='btn btn-secondary'
+            onClick={() => this.editItem({ contactname: contact.contactname, phone: contact.phone, email: contact.email })}>
               Edit
             </button>
             &nbsp;

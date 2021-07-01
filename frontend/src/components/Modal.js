@@ -21,8 +21,6 @@ export default class CustomModal extends Component {
 
     handleChange = (e) => {
 
-        console.log(e.target.name)
-
         const activeItem = { ...this.state.activeItem, [e.target.name]: e.target.value };
 
         this.setState({ activeItem });
@@ -42,7 +40,7 @@ export default class CustomModal extends Component {
                                 type='text'
                                 id='contact-name'
                                 name='contactname'
-                                value={this.state.activeItem.name}
+                                value={this.state.activeItem.contactname}
                                 onChange={this.handleChange}
                                 placeholder='Enter name of the contact'
                             />
@@ -53,7 +51,7 @@ export default class CustomModal extends Component {
                                 type='text'
                                 id='contact-phone-number'
                                 name='phone'
-                                value={this.state.activeItem.phone_number}
+                                value={this.state.activeItem.phone}
                                 onChange={this.handleChange}
                                 placeholder='Enter phone number'
                             /> 
@@ -61,10 +59,10 @@ export default class CustomModal extends Component {
                         <FormGroup>
                             <Label for='contact-email'>Email</Label>
                             <Input 
-                                type='text'
+                                type='email'
                                 id='contact-email'
                                 name='email'
-                                value={this.state.activeItem.phone_number}
+                                value={this.state.activeItem.email}
                                 onChange={this.handleChange}
                                 placeholder='Enter email'
                             /> 
