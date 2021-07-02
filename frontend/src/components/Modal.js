@@ -20,7 +20,7 @@ export default class CustomModal extends Component {
     }
 
     handleChange = (e) => {
-
+        
         const activeItem = { ...this.state.activeItem, [e.target.name]: e.target.value };
 
         this.setState({ activeItem });

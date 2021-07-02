@@ -4,22 +4,6 @@ import axios from 'axios';
 
 import React from 'react';
 
-
-const testContacts = [
-  {
-    id: 1,
-    contactname: 'John Smith',
-    phone: '1234567890',
-    email: 'john.smith@gmail.com'
-  },
-  {
-    id: 2,
-    contactname: 'John Johnson',
-    phone: '1234567890',
-    email: 'john.johnson@gmail.com'
-  }
-]
-
 class App extends React.Component {  
   constructor(props) {
     super(props);
@@ -57,7 +41,7 @@ class App extends React.Component {
 
     console.log(item)
 
-
+    //  if the contact id exists, then this is an Update request
     if (item.id) {
 
       let link = '/api/contactbook/' + item.id + '/';
@@ -66,7 +50,7 @@ class App extends React.Component {
         .put(link, item)
         .then((res) => this.refreshContacts());
         return;
-    } else {
+    } else {  //  otherwise create a new contact
       axios
       .post('/api/contactbook/', item)
       .then((res) => this.refreshContacts());
