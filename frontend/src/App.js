@@ -98,12 +98,6 @@ class App extends React.Component {
         </span>
         <span>
           <button
-            className='btn btn-info'>
-              View
-          </button>
-            &nbsp;
-            &nbsp;
-          <button
             className='btn btn-secondary'
             onClick={() => this.editItem(contact)}>
               Edit
