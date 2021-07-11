@@ -16,6 +16,8 @@ export default class CustomModal extends Component {
         super(props);
         this.state = {
             activeItem: this.props.activeItem,
+            phoneError: "",
+            emailError: "",
         };
     }
 
@@ -26,12 +28,46 @@ export default class CustomModal extends Component {
         this.setState({ activeItem });
     };
 
-    render() {
-        const { toggle, onSave } = this.props
+    validateInputs = () => {
+        let emailError = "";
+        let phoneError = "";
 
+        let emailCopy = this.state.activeItem.email;
+        if (emailCopy.trim() != '' && !emailCopy.includes('@')) {
+            emailError = 'Invalid email';
+        }
+        
+        let phoneCopy = this.state.activeItem.phone;
+        if (phoneCopy[0] == '+') {
+            phoneCopy = phoneCopy.replace('+', '');
+        }
+        if (isNaN(phoneCopy)) {
+            phoneError = 'Invalid phone number';
+        }
+
+        if (emailError || phoneError) {
+            this.setState({emailError, phoneError});
+            return false;
+        }
+
+        return true;
+    }
+
+    handleSubmit = () => {
+        const  onSave = this.props.onSave;
+        const isValid = this.validateInputs();
+        
+        if (!isValid) {
+            console.log(this.state);
+        } else {
+            onSave(this.state.activeItem);    
+        }
+    };  
+
+    render() {
         return (
-            <Modal isOpen={true} toggle={toggle}>
-                <ModalHeader toggle={toggle}>Contact</ModalHeader>
+            <Modal isOpen={true} toggle={this.props.toggle}>
+                <ModalHeader toggle={this.props.toggle}>Contact</ModalHeader>
                 <ModalBody>
                     <Form>
                         <FormGroup>
@@ -55,6 +91,9 @@ export default class CustomModal extends Component {
                                 onChange={this.handleChange}
                                 placeholder='Enter phone number'
                             /> 
+                            <div style={{fontSize: 12, color: 'red'}}>
+                                {this.state.phoneError}
+                            </div> 
                         </FormGroup>
                         <FormGroup>
                             <Label for='contact-email'>Email</Label>
@@ -65,14 +104,17 @@ export default class CustomModal extends Component {
                                 value={this.state.activeItem.email}
                                 onChange={this.handleChange}
                                 placeholder='Enter email'
-                            /> 
+                            />
+                            <div style={{fontSize: 12, color: 'red'}}>
+                                {this.state.emailError}
+                            </div>  
                         </FormGroup>
                     </Form>
                 </ModalBody>
                 <ModalFooter>
                     <Button
                         color='success'
-                        onClick={() => onSave(this.state.activeItem)}
+                        onClick={() => this.handleSubmit()}
                     >
                         Save
                     </Button>
