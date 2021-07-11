@@ -54,15 +54,16 @@ export default class CustomModal extends Component {
     }
 
     handleSubmit = () => {
-        const  onSave = this.props.onSave;
         const isValid = this.validateInputs();
         
-        if (!isValid) {
-            console.log(this.state);
-        } else {
-            onSave(this.state.activeItem);    
+        if (isValid) {
+            //  if no name is given, then set name as phone number.
+            if (this.state.activeItem.name.trim() == '') {
+                this.state.activeItem.name = this.state.activeItem.phone;
+            }
+            this.props.onSave(this.state.activeItem);    
         }
-    };  
+    };
 
     render() {
         return (
