@@ -55,7 +55,6 @@ class App extends React.Component {
       .post('/api/contactbook/', item)
       .then((res) => this.refreshContacts());
     }
-    
   };
 
   handleDelete = (item) => {
